@@ -1,11 +1,15 @@
 import * as React from 'react';
 import { BottomNavigation, Text } from 'react-native-paper';
 
-const HomeRoute = () => <Text>Accueuil</Text>;
+import HomeScreen from '../Screens/HomeScreen';
+import StatScreen from '../Screens/StatScreen';
+import CompteScreen from '../Screens/CompteScreen';
 
-const CompteRoute = () => <Text>Compte</Text>;
+const HomeRoute = () => <HomeScreen />;
 
-const StatistiqueRoute = () => <Text>Statistique</Text>;
+const CompteRoute = () => <CompteScreen />;
+
+const StatistiqueRoute = () => <StatScreen />;
 
 const MyComponent = () => {
     const [index, setIndex] = React.useState(0);
