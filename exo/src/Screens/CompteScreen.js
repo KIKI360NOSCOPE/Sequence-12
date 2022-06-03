@@ -1,4 +1,4 @@
-import React from 'react'
+import *  as React from 'react'
 import { StyleSheet, Text, View, Button, TextInput, ScrollView, Picker, DatePickerIOS, TouchableOpacity, Alert, Image } from 'react-native';
 
 const CompteScreen = ({ navigation }) => {
@@ -7,7 +7,7 @@ const CompteScreen = ({ navigation }) => {
       <Text>CompteScreen</Text>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Gestion')}>
-          <Text style={styles.buttonText}>Se connecter</Text>
+          <Text style={styles.buttonText}>Gestion compte</Text>
         </TouchableOpacity>
       </View>
     </View>
