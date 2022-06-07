@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { BottomNavigation, Text } from 'react-native-paper';
-
+import CompteScreen from '../Screens/CompteScreen';
 import HomeScreen from '../Screens/HomeScreen';
 import StatScreen from '../Screens/StatScreen';
 import StackNavigator from './StackNavigator';
 
-const HomeRoute = () => <HomeScreen />;
+const HomeRoute = () => <StackNavigator  />;
 
-const CompteRoute = () => <StackNavigator />;
+const CompteRoute = () => <CompteScreen />;
 
 const StatistiqueRoute = () => <StatScreen />;
 
