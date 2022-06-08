@@ -67,13 +67,15 @@ const GestionScreen = () => {
                         {incomes.map((item, index) => {
                             return (
                                 <List.Accordion
-                                    title={item.category}
-                                    description={item.amount}
+                                    title={item.amount}
+                                    description={item.category}
                                     left={props => <List.Icon {...props}/>}
                                     key={item._id}
                                 >
                                     <List.Item title={formatDate(item.date)} />
                                     <List.Item titleNumberOfLines={2} title={item.comments} />
+                                    {/* id icome and view name user */}
+                                    <List.Item title={item._id_income} />
                                 </List.Accordion>
                             )
                         }
@@ -86,8 +88,8 @@ const GestionScreen = () => {
                         {expenses.map((item, index) => {
                             return (
                                 <List.Accordion
-                                    title={item.category}
-                                    description={item.amount}
+                                    title={item.amount}
+                                    description={item.category}
                                     left={props => <List.Icon {...props}/>}
                                     key={item._id}
                                 >

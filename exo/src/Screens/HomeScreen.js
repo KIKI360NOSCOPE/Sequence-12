@@ -103,13 +103,13 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         textAlign: 'center',
-        color: 'green'
+        color: 'green',
     },
     paragraphless: {
         margin: 24,
         fontSize: 18,
         fontWeight: 'bold',
         textAlign: 'center',
-        color: 'red'
+        color: 'red',
     }
 })

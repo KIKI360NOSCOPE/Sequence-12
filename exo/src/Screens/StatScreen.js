@@ -1,7 +1,7 @@
 /* create stat screen for expense and incomes */
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, Dimensions } from 'react-native';
-import { Card, List, Modal, Portal, Paragraph } from 'react-native-paper';
+import { Card, List, Modal, Portal, Paragraph, Divider } from 'react-native-paper';
 import { LineChart, BarChart, PieChart, ProgressChart, ContributionGraph, StackedBarChart } from 'react-native-chart-kit'
 import { Picker } from '@react-native-picker/picker'
 import data from '../datas/data.json'
@@ -22,7 +22,7 @@ const ExpensesScreen = () => {
     const formatDate = (date) => {
         const dateArray = date.split('T')
         const dateArray2 = dateArray[0].split('-')
-        const dateArray3 = dateArray2[2] + '/' + dateArray2[1] + '/' + dateArray2[0]
+        const dateArray3 = dateArray2[2] + '/' + dateArray2[1] 
         return dateArray3
     }
 
@@ -170,9 +170,7 @@ const ExpensesScreen = () => {
 
 const styles = StyleSheet.create({
     container: {
-
         flex: 1,
-        backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 20,
