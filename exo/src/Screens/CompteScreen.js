@@ -30,6 +30,14 @@ const GestionScreen = () => {
     const totalExpenses = expenses.map(item => item.amount.replace('€', '').replace(',', '')).reduce((acc, item) => parseFloat(acc) + parseFloat(item), 0).toFixed(2)
     /* calculate total balance with the amount  */
     const totalBalance = (parseFloat(totalIncome) - parseFloat(totalExpenses)).toFixed(2)
+
+    const formatDate = (date) => {
+        const dateArray = date.split('T')
+        const dateArray2 = dateArray[0].split('-')
+        const dateArray3 = dateArray2[2] + '/' + dateArray2[1] + '/' + dateArray2[0]
+        return dateArray3
+    }
+
     return (
         <ScrollView>
             <View style={styles.container}>
@@ -64,7 +72,7 @@ const GestionScreen = () => {
                                     left={props => <List.Icon {...props}/>}
                                     key={item._id}
                                 >
-                                    <List.Item title={item.date} />
+                                    <List.Item title={formatDate(item.date)} />
                                     <List.Item titleNumberOfLines={2} title={item.comments} />
                                 </List.Accordion>
                             )
@@ -83,7 +91,7 @@ const GestionScreen = () => {
                                     left={props => <List.Icon {...props}/>}
                                     key={item._id}
                                 >
-                                    <List.Item title={item.date} />
+                                    <List.Item title={formatDate(item.date)} />
                                     <List.Item titleNumberOfLines={2} title={item.comments} />
                                 </List.Accordion>
                             )
@@ -92,7 +100,6 @@ const GestionScreen = () => {
                     </List.Section>
                 </Card>
                 <Card style={styles.card}>
-
                     <Card.Title title="Balance" />
                     <List.Item
                         title={`${totalBalance} €`}

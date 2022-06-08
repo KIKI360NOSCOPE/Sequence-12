@@ -18,6 +18,29 @@ const ExpensesScreen = () => {
     const [category, setCategory] = React.useState(data[0].category)
     const [comments, setComments] = React.useState(data[0].comments)
     const [_id_income, set_id_income] = React.useState(data[0]._id_income)
+    /* 2021-05-21T19:27:49.861Z format date correctly */
+    const formatDate = (date) => {
+        const dateArray = date.split('T')
+        const dateArray2 = dateArray[0].split('-')
+        const dateArray3 = dateArray2[2] + '/' + dateArray2[1] + '/' + dateArray2[0]
+        return dateArray3
+    }
+
+    /* chronological order in date */
+    const expensesOrder = expenses.sort((a, b) => {
+        const dateA = new Date(a.date)
+        const dateB = new Date(b.date)
+        return dateA - dateB
+    }
+    )
+    /* chronological order in date */
+    const incomesOrder = incomes.sort((a, b) => {
+        const dateA = new Date(a.date)
+        const dateB = new Date(b.date)
+        return dateA - dateB
+    }
+    )
+
     return (
         <ScrollView>
             <View style={styles.container}>
@@ -45,7 +68,7 @@ const ExpensesScreen = () => {
               {/* create linechart for expenses */}
               <LineChart
                 data={{
-                  labels: expenses.map(item => item.date),
+                  labels: expensesOrder.map(item => formatDate(item.date)),
                   datasets: [
                     {
                       data: expenses.map(item => item.amount.replace('€', '').replace(',', '')),
@@ -63,9 +86,10 @@ const ExpensesScreen = () => {
                       pointBorderWidth: 1,
                     },
                   ],
+                  legend: ["Depenses"]
                 }}
                 width={Dimensions.get('window').width} // from react-native
-                height={220}
+                height={400}
                 yAxisLabel={'€'}
                 yAxisScaleEnabled={true}
                 chartConfig={{
@@ -93,7 +117,7 @@ const ExpensesScreen = () => {
               {/* create linechart for incomes */}
               <LineChart
                 data={{
-                  labels: incomes.map(item => item.date),
+                  labels: incomesOrder.map(item => formatDate(item.date)),
                   datasets: [
                     {
                       data: incomes.map(item => item.amount.replace('€', '').replace(',', '')),
@@ -111,9 +135,10 @@ const ExpensesScreen = () => {
                       pointBorderWidth: 1,
                     },
                   ],
+                  legend: ['Revenus'],
                 }}
                 width={Dimensions.get('window').width} // from react-native
-                height={220}
+                height={400}
                 yAxisLabel={'€'}
                 yAxisScaleEnabled={true}
                 chartConfig={{
@@ -150,6 +175,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
+        marginTop: 20,
+        marginBottom: 20,
+        marginLeft: 20,
+        marginRight: 20,
+
     },
     text: {
         fontSize: 20,
