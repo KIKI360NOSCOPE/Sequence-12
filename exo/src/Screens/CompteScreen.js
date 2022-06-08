@@ -2,13 +2,15 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native'
 import React from 'react'
 import Data from '../datas/data.json'
 import { Picker } from '@react-native-picker/picker'
-import { Card, List, Modal } from 'react-native-paper';
+import { Card, List, Modal, Portal, Paragraph } from 'react-native-paper';
 
 
 
 const selectId = (id) => {
-  return Data.find(item => item._id === id)
+    return Data.find(item => item._id === id)
 }
+
+
 
 /* show all incomes and expenses in list with the comments and categoty and date compared id */
 const GestionScreen = () => {
@@ -21,7 +23,6 @@ const GestionScreen = () => {
     const [category, setCategory] = React.useState(Data[0].category)
     const [comments, setComments] = React.useState(Data[0].comments)
     const [_id_income, set_id_income] = React.useState(Data[0]._id_income)
-    const [visible, setVisible] = React.useState(false)
 
     /* calculate total incomes with the amount  */
     const totalIncome = incomes.map(item => item.amount.replace('€', '').replace(',', '')).reduce((acc, item) => parseFloat(acc) + parseFloat(item), 0).toFixed(2)
@@ -31,69 +32,75 @@ const GestionScreen = () => {
     const totalBalance = (parseFloat(totalIncome) - parseFloat(totalExpenses)).toFixed(2)
     return (
         <ScrollView>
-        <View style={styles.container}>
-            <Picker
-                selectedValue={id}
-                style={{ height: 50, width: 200 }}
-                onValueChange={(itemValue, itemIndex) => {
-                    setId(itemValue)
-                    setUser(selectId(itemValue).user)
-                    setIncomes(selectId(itemValue).incomes)
-                    setExpenses(selectId(itemValue).expenses)
-                    setDate(selectId(itemValue).date)
-                    setAmount(selectId(itemValue).amount)
-                    setCategory(selectId(itemValue).category)
-                    setComments(selectId(itemValue).comments)
-                    set_id_income(selectId(itemValue)._id_income)
-                }
-                }>
-                {Data.map((item, index) => {
-                    return <Picker.Item label={item.user} value={item._id} key={item._id} />
-                }
-                )}
-            </Picker>
-            <Card style={styles.card}>
-                <Card.Title title="Revenus" />
-                <List.Section>
-                    {incomes.map((item, index) => {
-                        return (
-                            <List.Item
-                                key={index}
-                                title={item.category}
-                                description={item.amount}    
-                                right={props => <List.Icon {...props} icon="arrow-right" />}              
-                            />
-                        )
+            <View style={styles.container}>
+                <Picker
+                    selectedValue={id}
+                    style={{ height: 50, width: 200 }}
+                    onValueChange={(itemValue, itemIndex) => {
+                        setId(itemValue)
+                        setUser(selectId(itemValue).user)
+                        setIncomes(selectId(itemValue).incomes)
+                        setExpenses(selectId(itemValue).expenses)
+                        setDate(selectId(itemValue).date)
+                        setAmount(selectId(itemValue).amount)
+                        setCategory(selectId(itemValue).category)
+                        setComments(selectId(itemValue).comments)
+                        set_id_income(selectId(itemValue)._id_income)
+                    }
+                    }>
+                    {Data.map((item, index) => {
+                        return <Picker.Item label={item.user} value={item._id} key={item._id} />
                     }
                     )}
-                </List.Section>
-            </Card>
-            <Card style={styles.card}>
-                <Card.Title title="Depenses" />
-                <List.Section>
-                    {expenses.map((item, index) => {
-                        return (
-                            <List.Item
-                                key={index}
-                                title={item.category}
-                                description={item.amount}
-                                right={props => <List.Icon {...props} icon="arrow-right" />}
-                            />
-                        )
-                    }
-                    )}
-                </List.Section>
-            </Card>
-            <Card style={styles.card}>
-                    
-                <Card.Title title="Balance" />
-                <List.Item
-                    title={`${totalBalance} €`}
-                    description={`${totalIncome} € - ${totalExpenses} €`}
-                    right={props => <List.Icon {...props} icon="arrow-right" />}
-                />
-            </Card>
-        </View>
+                </Picker>
+                <Card style={styles.card}>
+                    <Card.Title title="Revenus" />
+                    <List.Section>
+                        {incomes.map((item, index) => {
+                            return (
+                                <List.Accordion
+                                    title={item.category}
+                                    description={item.amount}
+                                    left={props => <List.Icon {...props}/>}
+                                    key={item._id}
+                                >
+                                    <List.Item title={item.date} />
+                                    <List.Item titleNumberOfLines={2} title={item.comments} />
+                                </List.Accordion>
+                            )
+                        }
+                        )}
+                    </List.Section>
+                </Card>
+                <Card style={styles.card}>
+                    <Card.Title title="Depenses" />
+                    <List.Section>
+                        {expenses.map((item, index) => {
+                            return (
+                                <List.Accordion
+                                    title={item.category}
+                                    description={item.amount}
+                                    left={props => <List.Icon {...props}/>}
+                                    key={item._id}
+                                >
+                                    <List.Item title={item.date} />
+                                    <List.Item titleNumberOfLines={2} title={item.comments} />
+                                </List.Accordion>
+                            )
+                        }
+                        )}
+                    </List.Section>
+                </Card>
+                <Card style={styles.card}>
+
+                    <Card.Title title="Balance" />
+                    <List.Item
+                        title={`${totalBalance} €`}
+                        description={`${totalIncome} € - ${totalExpenses} €`}
+                        right={props => <List.Icon {...props} icon="arrow-right" />}
+                    />
+                </Card>
+            </View>
         </ScrollView>
     )
 }
